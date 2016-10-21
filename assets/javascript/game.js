@@ -17,7 +17,6 @@ for(var i = 0; i < guessArr.length; i++){
 			console.log("Wins:" + rightGuess);
 			console.log(compPicks);
 			document.getElementById("win").innerHTML  = 'Wins: '+ rightGuess;
-			humanGuess.length = 0;
 			document.getElementById("guess").innerHTML = 'Guesses so far: ' + humanGuess;
 		}
 
