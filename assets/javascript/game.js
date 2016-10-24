@@ -3,24 +3,30 @@ var wrongGuess = 0;
 var guessLeft = 9;
 var guessArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y','z'];
 var humanGuess = [];
+var compPicks = "";
 
-for(var i = 0; i < guessArr.length; i++){
-	var compPicks = guessArr[Math.floor(Math.random() * 25)];
-	console.log(compPicks);
+document.onkeyup = function(event) {
+var humanPicks = String.fromCharCode(event.keyCode).toLowerCase();
 
-	document.onkeyup = function(event) {
-	var humanPicks = String.fromCharCode(event.keyCode).toLowerCase();
+function selectNew(){
+	compPicks = guessArr[Math.floor(Math.random() * guessArr.length)];
 
-		if(humanPicks == compPicks) {
-			console.log("This worked");
-			rightGuess++;
-			console.log("Wins:" + rightGuess);
-			console.log(compPicks);
-			document.getElementById("win").innerHTML  = 'Wins: '+ rightGuess;
-			document.getElementById("guess").innerHTML = 'Guesses so far: ' + humanGuess;
-		}
 
-		else if(humanPicks !== compPicks) {
+	return compPicks;
+}
+function endGame(){
+	humanGuess = [];
+	guessLeft = 9;
+	alert("Oh no you lose!... well go ahead try again.");
+	console.log("is this working?");
+	return;
+
+}
+
+	//
+	if (guessLeft > 0){
+		
+		if(humanPicks !== compPicks) {
 			console.log("This worked too");
 			guessLeft--;
 			console.log("Loses:" + wrongGuess);
@@ -28,19 +34,39 @@ for(var i = 0; i < guessArr.length; i++){
 			document.getElementById("guessLeft").innerHTML  = 'Guesses left: '+ guessLeft;
 			humanGuess.push(humanPicks);
 			document.getElementById("guess").innerHTML = 'Guesses so far: ' + humanGuess;
+		
 		}
-		if (guessLeft === 0) {
-			console.log("out of guesses");
-			wrongGuess++;
-			document.getElementById("lose").innerHTML = 'Loses: ' + wrongGuess;
-			guessLeft += 9;
-			console.log(guessLeft);
-			document.getElementById("guessLeft").innerHTML  = 'Guesses left: '+ guessLeft;
-		}
-		if (guessLeft == 9){
-			humanGuess.length = 0;
-			console.log(humanGuess);
+		else if(humanPicks == compPicks) {
+				console.log("This worked");
+				selectNew();
+				rightGuess++;
+				console.log("Wins:" + rightGuess);
+				console.log(compPicks);
+				document.getElementById("win").innerHTML  = 'Wins: '+ rightGuess;
+				humanGuess = [];
 				document.getElementById("guess").innerHTML = 'Guesses so far: ' + humanGuess;
+
 		}
 	}
-}		
+
+	else if (guessLeft == 0) {
+		console.log("out of guesses");
+		selectNew();
+		wrongGuess++;
+		document.getElementById("lose").innerHTML = 'Loses: ' + wrongGuess;
+		guessLeft += 9;
+		console.log(guessLeft);
+		document.getElementById("guessLeft").innerHTML  = 'Guesses left: '+ guessLeft;
+		humanGuess = [];
+		console.log(humanGuess);
+		document.getElementById("guess").innerHTML = 'Guesses so far: ' + humanGuess;
+
+	if(wrongGuess != 0) {
+
+					endGame();
+
+				}
+		
+	}
+}
+		
